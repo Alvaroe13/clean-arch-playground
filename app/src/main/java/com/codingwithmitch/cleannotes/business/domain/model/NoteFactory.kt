@@ -13,11 +13,7 @@ constructor(
     private val dateUtil: DateUtil
 ) {
 
-    fun createSingleNote(
-        id: String? = null,
-        title: String,
-        body: String? = null
-    ): Note {
+    fun createSingleNote(id: String? = null, title: String, body: String? = null): Note {
         return Note(
             id = id ?: UUID.randomUUID().toString(),
             title = title,
@@ -27,9 +23,12 @@ constructor(
         )
     }
 
+    /**
+     * NOTE : used for testing purposes
+     */
     fun createNoteList(numNotes: Int): List<Note> {
         val list: ArrayList<Note> = ArrayList()
-        for(i in 0 until numNotes){ // exclusive on upper bound
+        for (i in 0 until numNotes) { // exclusive on upper bound
             list.add(
                 createSingleNote(
                     id = UUID.randomUUID().toString(),

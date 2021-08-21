@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseNoteFragment
 constructor(
-    private @LayoutRes val layoutRes: Int
-): Fragment() {
+    @LayoutRes private val layoutRes: Int
+) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

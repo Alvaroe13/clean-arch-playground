@@ -11,24 +11,19 @@ class DateUtil
 @Inject
 constructor(
     private val dateFormat: SimpleDateFormat
-)
-{
+) {
     // Date format: "2019-07-23 HH:mm:ss"
 
-    fun removeTimeFromDateString(sd: String): String{
-        return sd.substring(0, sd.indexOf(" "))
-    }
+    fun removeTimeFromDateString(sd: String): String = sd.substring(0, sd.indexOf(" "))
 
-    fun convertFirebaseTimestampToStringData(timestamp: Timestamp): String{
-        return dateFormat.format(timestamp.toDate())
-    }
+    fun convertFirebaseTimestampToStringData(timestamp: Timestamp): String =
+        dateFormat.format(timestamp.toDate())
 
-    fun convertStringDateToFirebaseTimestamp(date: String): Timestamp{
-        return Timestamp(dateFormat.parse(date))
-    }
+    fun convertStringDateToFirebaseTimestamp(date: String): Timestamp =
+        Timestamp(dateFormat.parse(date))
 
-    fun getCurrentTimestamp(): String {
-        return dateFormat.format(Date())
-    }
+
+    fun getCurrentTimestamp(): String = dateFormat.format(Date())
+
 
 }

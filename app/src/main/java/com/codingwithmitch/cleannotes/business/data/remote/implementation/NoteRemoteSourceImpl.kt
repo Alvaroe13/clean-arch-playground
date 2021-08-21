@@ -15,7 +15,7 @@ constructor(
     private val firestoreService: FirestoreService
 ) : NoteRemoteDataSource {
 
-    override suspend fun insertOrUpdate(note: Note) = firestoreService.insertOrUpdate(note)
+    override suspend fun insertOrUpdateNote(note: Note) = firestoreService.insertOrUpdate(note)
 
     override suspend fun deleteNote(primaryKey: String) = firestoreService.deleteNote(primaryKey)
 

@@ -4,7 +4,7 @@ import com.codingwithmitch.cleannotes.business.domain.model.Note
 
 interface NoteRemoteDataSource {
 
-    suspend fun insertOrUpdate(note: Note)
+    suspend fun insertOrUpdateNote(note: Note)
     suspend fun deleteNote(primaryKey: String)
     suspend fun insertDeletedNote(note: Note)
     suspend fun insertDeletedNotes(notes: List<Note>)

@@ -7,6 +7,7 @@ abstract class CacheResponseHandler<ViewState, Data>(
     private val response: CacheResult<Data?>,
     private val stateEvent: StateEvent?
 ) {
+
     suspend fun getResult(): DataState<ViewState>? {
 
         return when (response) {
@@ -14,18 +15,16 @@ abstract class CacheResponseHandler<ViewState, Data>(
             is CacheResult.GenericError -> processErrorResult(response.errorMessage)
 
             is CacheResult.Success -> {
-                if (response.value == null) {
-                    processErrorResult(CacheErrors.CACHE_DATA_NULL)
-                } else {
-                    handleSuccess(resultObj = response.value)
-                }
+                response.value?.let{
+                    handleSuccess(resultObj = it)
+                } ?: processErrorResult(CacheErrors.CACHE_DATA_NULL)
             }
 
         }
     }
 
-    private fun processErrorResult(error: String?): DataState<ViewState> {
-        return DataState.error(
+    private fun processErrorResult(error: String?): DataState<ViewState> =
+        DataState.error(
             response = Response(
                 message = "${stateEvent?.errorInfo()}\n\nReason: $error",
                 uiComponentType = UIComponentType.Dialog(),
@@ -33,7 +32,6 @@ abstract class CacheResponseHandler<ViewState, Data>(
             ),
             stateEvent = stateEvent
         )
-    }
 
     abstract suspend fun handleSuccess(resultObj: Data): DataState<ViewState>?
 

@@ -1,5 +1,8 @@
 package com.codingwithmitch.cleannotes.business.domain.state
 
+/**
+ * MVI arch related. not clean arch practice necessarily
+ */
 data class DataState<T>(
     var stateMessage: StateMessage? = null,
     var data: T? = null,

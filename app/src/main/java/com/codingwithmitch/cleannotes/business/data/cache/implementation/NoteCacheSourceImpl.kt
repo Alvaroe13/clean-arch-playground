@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NoteCacheSourceImplementation
+class NoteCacheSourceImpl
 @Inject
 constructor(
     private val noteDao: NoteDaoService // TODO ( create class)
@@ -20,7 +20,7 @@ constructor(
     override suspend fun updateNote(primaryKey: String, newTitle: String, newBody: String): Int
     = noteDao.updateNote( primaryKey , newTitle , newBody)
 
-    override suspend fun searcNotes(query: String, filterAndOrder: String, page: Int): List<Note>
+    override suspend fun searchNotes(query: String, filterAndOrder: String, page: Int): List<Note>
     = noteDao.searcNotes( query , filterAndOrder , page)
 
     override suspend fun searchNoteById(primaryKey: String): Note?

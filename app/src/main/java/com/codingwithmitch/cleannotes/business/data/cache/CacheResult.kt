@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.business.data.cache.util
+package com.codingwithmitch.cleannotes.business.data.cache
 
 sealed class CacheResult<out T> {
 

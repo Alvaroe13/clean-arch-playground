@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.business.data.cache.util
+package com.codingwithmitch.cleannotes.business.data.cache
 
 import com.codingwithmitch.cleannotes.business.domain.state.*
 
@@ -8,7 +8,10 @@ abstract class CacheResponseHandler<ViewState, Data>(
     private val stateEvent: StateEvent?
 ) {
 
-    suspend fun getResult(): DataState<ViewState>? {
+    /**
+     * the one triggering
+     */
+    suspend fun execute(): DataState<ViewState>? {
 
         return when (response) {
 
@@ -26,7 +29,7 @@ abstract class CacheResponseHandler<ViewState, Data>(
     private fun processErrorResult(error: String?): DataState<ViewState> =
         DataState.error(
             response = Response(
-                message = "${stateEvent?.errorInfo()}\n\nReason: $error",
+                message = "${stateEvent?.errorInfo()}, Reason: $error",
                 uiComponentType = UIComponentType.Dialog(),
                 messageType = MessageType.Error()
             ),

@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.business.data.remote.util
+package com.codingwithmitch.cleannotes.business.data.remote
 
 import com.codingwithmitch.cleannotes.business.domain.state.*
 
@@ -14,13 +14,13 @@ abstract class ApiResponseHandler <ViewState, Data>(
 
             is ApiResult.GenericError -> processErrorResponse( response.errorMessage.toString() )
 
-            is ApiResult.NetworkError -> processErrorResponse( NetworkErrors.NETWORK_ERROR )
+            is ApiResult.NetworkError -> processErrorResponse(NetworkErrors.NETWORK_ERROR)
 
             is ApiResult.Success -> {
 
                 response.value?.let{
                     handleSuccess(resultObj = it)
-                } ?: processErrorResponse( NetworkErrors.NETWORK_DATA_NULL )
+                } ?: processErrorResponse(NetworkErrors.NETWORK_DATA_NULL)
 
             }
 

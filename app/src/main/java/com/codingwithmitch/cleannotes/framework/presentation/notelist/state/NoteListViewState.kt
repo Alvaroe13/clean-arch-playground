@@ -21,6 +21,7 @@ data class NoteListViewState(
 
 ) : Parcelable, ViewState {
 
+    /** annotation generates all necessary func to make object parcelable */
     @Parcelize
     data class NotePendingDelete(
         var note : Note ? = null,

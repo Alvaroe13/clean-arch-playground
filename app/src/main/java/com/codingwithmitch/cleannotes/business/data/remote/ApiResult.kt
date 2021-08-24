@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.business.data.remote.util
+package com.codingwithmitch.cleannotes.business.data.remote
 
 sealed class ApiResult<out T> {
 

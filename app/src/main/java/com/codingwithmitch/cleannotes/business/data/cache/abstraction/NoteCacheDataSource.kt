@@ -3,7 +3,7 @@ package com.codingwithmitch.cleannotes.business.data.cache.abstraction
 import com.codingwithmitch.cleannotes.business.domain.model.Note
 
 /**
- * here are the functionalities the cache will cover throughout this app
+ * here are the actions the cache will take throughout this app
  */
 interface NoteCacheDataSource {
 
@@ -13,7 +13,7 @@ interface NoteCacheDataSource {
 
     suspend fun deleteNotes(noteList: List<Note>): Int
 
-    suspend fun updateNote(primaryKey: String, newTitle: String, newBody: String): Int
+    suspend fun updateNote(primaryKey: String, newTitle: String, newBody: String?): Int
 
     suspend fun searchNotes(query: String, filterAndOrder: String, page: Int): List<Note>
 

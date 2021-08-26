@@ -31,7 +31,7 @@ constructor(
 
     override suspend fun searchNote(note: Note) = firestoreService.searchNote(note)
 
-    override suspend fun insertOrUpdates(note: Note) = firestoreService.insertOrUpdates(note)
+    override suspend fun insertOrUpdateNotes(notes: List<Note>) = firestoreService.insertOrUpdates(notes)
 
     override suspend fun getAllNotes(): List<Note> = firestoreService.getAllNotes()
 }

@@ -11,7 +11,7 @@ interface NoteRemoteDataSource {
     suspend fun deleteDeletedNote(note: Note)
     suspend fun getDeletedNotes(): List<Note>
     suspend fun deleteAllNotes()
-    suspend fun searchNote(note: Note)
-    suspend fun insertOrUpdates(note: Note): Note?
+    suspend fun searchNote(note: Note): Note?
+    suspend fun insertOrUpdateNotes(notes: List<Note>)
     suspend fun getAllNotes(): List<Note>
 }

@@ -10,7 +10,8 @@ import com.codingwithmitch.cleannotes.business.domain.state.StateMessage
 sealed class NoteListStateEvent : StateEvent {
 
     class InsertNewNoteEvent(
-        val title: String
+        val title: String,
+        val body: String
     ) : NoteListStateEvent() {
         override fun errorInfo(): String = "Error inserting new note"
         override fun eventName(): String = "InsertNewNoteEvent"

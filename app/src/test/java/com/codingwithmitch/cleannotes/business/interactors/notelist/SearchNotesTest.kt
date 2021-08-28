@@ -14,6 +14,7 @@ import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.Note
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListViewState
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -68,18 +69,15 @@ class SearchNotesTest {
             filterAndOrder = ORDER_BY_ASC_DATE_UPDATED,
             page = 1,
             stateEvent = SearchNotesEvent()
-        ).collect(object: FlowCollector<DataState<NoteListViewState>?>{
-            override suspend fun emit(value: DataState<NoteListViewState>?) {
-                assertEquals(
-                    value?.stateMessage?.response?.message,
-                    SEARCH_NOTES_SUCCESS
-                )
-                value?.data?.noteList?.let { list ->
-                    results = ArrayList(list)
-                }
-
+        ).collect { value ->
+            assertEquals(
+                value?.stateMessage?.response?.message,
+                SEARCH_NOTES_SUCCESS
+            )
+            value?.data?.noteList?.let { list ->
+                results = ArrayList(list)
             }
-        })
+        }
 
         // confirm notes were retrieved
         assertTrue { results != null }
@@ -103,18 +101,15 @@ class SearchNotesTest {
             filterAndOrder = ORDER_BY_ASC_DATE_UPDATED,
             page = 1,
             stateEvent = SearchNotesEvent()
-        ).collect(object: FlowCollector<DataState<NoteListViewState>?>{
-            override suspend fun emit(value: DataState<NoteListViewState>?) {
-                assertEquals(
-                    value?.stateMessage?.response?.message,
-                    SEARCH_NOTES_NO_MATCHING_RESULTS
-                )
-                value?.data?.noteList?.let { list ->
-                    results = ArrayList(list)
-                }
+        ).collect { value ->
+            assertEquals(
+                value?.stateMessage?.response?.message,
+                SEARCH_NOTES_NO_MATCHING_RESULTS
+            )
+            value?.data?.noteList?.let { list ->
+                results = ArrayList(list)
             }
-        })
-
+        }
         // confirm nothing was retrieved
         assertTrue { results?.run { size == 0 }?: true }
 
@@ -137,19 +132,16 @@ class SearchNotesTest {
             filterAndOrder = ORDER_BY_ASC_DATE_UPDATED,
             page = 1,
             stateEvent = SearchNotesEvent()
-        ).collect(object: FlowCollector<DataState<NoteListViewState>?>{
-            override suspend fun emit(value: DataState<NoteListViewState>?) {
-                assert(
-                    value?.stateMessage?.response?.message
-                        ?.contains(CacheErrors.CACHE_ERROR_UNKNOWN) ?: false
-                )
-                value?.data?.noteList?.let { list ->
-                    results = ArrayList(list)
-                }
-                println("results: ${results}")
+        ).collect { value->
+            assert(
+                value?.stateMessage?.response?.message
+                    ?.contains(CacheErrors.CACHE_ERROR_UNKNOWN) ?: false
+            )
+            value?.data?.noteList?.let { list ->
+                results = ArrayList(list)
             }
-        })
-
+            println("results: ${results}")
+        }
         // confirm nothing was retrieved
         assertTrue { results?.run { size == 0 }?: true }
 

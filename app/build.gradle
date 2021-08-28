@@ -50,6 +50,11 @@ android {
             useJUnitPlatform()
         }
     }
+
+    //json file for testing fake note list
+    sourceSets {
+        test.resources.srcDirs += 'src/test/res'
+    }
 }
 
 
@@ -88,6 +93,7 @@ dependencies {
     testImplementation TestDependencies.jupiter_api
     testImplementation TestDependencies.jupiter_params
     testImplementation TestDependencies.junit4
+    testImplementation Dependencies.retrofit_gson
     testRuntimeOnly TestDependencies.jupiter_engine
 
 }

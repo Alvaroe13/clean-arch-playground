@@ -19,7 +19,7 @@ class InsertNewNote(
     private val noteCacheDataSource: NoteCacheDataSource,
     private val noteNetworkDataSource: NoteRemoteDataSource,
     private val noteFactory: NoteFactory
-){
+) {
 
     fun insertNewNote(
         id: String? = null,
@@ -28,11 +28,11 @@ class InsertNewNote(
     ): Flow<DataState<NoteListViewState>?> = flow {
 
         val newNote = noteFactory.createSingleNote(
-            id = id ,
+            id = id,
             title = title
         )
 
-        val cacheResult = safeCacheCall(Dispatchers.IO){
+        val cacheResult = safeCacheCall(Dispatchers.IO) {
             noteCacheDataSource.insertNote(newNote)
         }
 
@@ -40,9 +40,38 @@ class InsertNewNote(
             response = cacheResult,
             stateEvent = stateEvent
         ) {
+
             override suspend fun handleSuccess(resultObj: Long): DataState<NoteListViewState>? {
-                 return  processSuccessfulResponse(resultObj, newNote, stateEvent)
+                return processSuccessfulResponse(resultObj, stateEvent)
             }
+
+            override fun processSuccessfulResponse(
+                resultObj: Long,
+                stateEvent: StateEvent
+            ): DataState<NoteListViewState>? {
+                return if (resultObj > 0) {
+
+                    val viewState = NoteListViewState(newNote = newNote)
+
+                    val response = Response(
+                        message = INSERT_NOTE_SUCCESS,
+                        uiComponentType = UIComponentType.Toast(),
+                        messageType = MessageType.Success()
+                    )
+
+                    DataState.data(response = response, data = viewState, stateEvent = stateEvent)
+                } else {
+
+                    val response = Response(
+                        message = INSERT_NOTE_FAILED,
+                        uiComponentType = UIComponentType.Toast(),
+                        messageType = MessageType.Error()
+                    )
+
+                    DataState.data(response = response, data = null, stateEvent = stateEvent)
+                }
+            }
+
 
         }.execute()
 
@@ -51,46 +80,15 @@ class InsertNewNote(
         updateNetwork(cacheResponse?.stateMessage?.response?.message, newNote)
     }
 
-    /**
-     * process successful response from room
-     */
-    private fun processSuccessfulResponse(
-        resultObj: Long,
-        newNote : Note,
-        stateEvent : StateEvent
-    ) : DataState<NoteListViewState>{
-        return  if(resultObj > 0){
 
-            val viewState = NoteListViewState(newNote = newNote )
-
-            val response = Response(
-                message = INSERT_NOTE_SUCCESS,
-                uiComponentType = UIComponentType.Toast(),
-                messageType = MessageType.Success()
-            )
-
-            DataState.data(response = response , data = viewState, stateEvent = stateEvent)
-        }
-        else{
-
-            val response = Response(
-                message = INSERT_NOTE_FAILED,
-                uiComponentType = UIComponentType.Toast(),
-                messageType = MessageType.Error()
-            )
-
-            DataState.data(response = response, data = null, stateEvent = stateEvent)
-        }
-    }
-
-    private suspend fun updateNetwork(cacheResponse: String?, newNote: Note){
-        if(cacheResponse.equals(INSERT_NOTE_SUCCESS)){
+    private suspend fun updateNetwork(cacheResponse: String?, newNote: Note) {
+        if (cacheResponse.equals(INSERT_NOTE_SUCCESS)) {
 
             noteNetworkDataSource.insertOrUpdateNote(newNote)
         }
     }
 
-    companion object{
+    companion object {
         const val INSERT_NOTE_SUCCESS = "Successfully inserted new note."
         const val INSERT_NOTE_FAILED = "Failed to insert new note."
     }

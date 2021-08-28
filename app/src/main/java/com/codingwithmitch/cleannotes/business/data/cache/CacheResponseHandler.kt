@@ -2,7 +2,11 @@ package com.codingwithmitch.cleannotes.business.data.cache
 
 import com.codingwithmitch.cleannotes.business.domain.state.*
 
-
+/**
+ *  param "ViewState" = Indicates the view in the app where this class is called
+ *  param "Data" = Indicates the type os result returned from this operation
+ *  NOTE : See this class implementation in use-cases for visual explanation.
+ */
 abstract class CacheResponseHandler<ViewState, Data>(
     private val response: CacheResult<Data?>,
     private val stateEvent: StateEvent?
@@ -26,6 +30,11 @@ abstract class CacheResponseHandler<ViewState, Data>(
         }
     }
 
+    /**
+     * NOTE : This can be an abstract fun as well and return error value here but we would have to
+     * remove "Data" param of this class since result will be returned by "handleSuccess"  fun
+     * or this fun "processErrorResult"
+     */
     private fun processErrorResult(error: String?): DataState<ViewState> =
         DataState.error(
             response = Response(
@@ -37,5 +46,8 @@ abstract class CacheResponseHandler<ViewState, Data>(
         )
 
     abstract suspend fun handleSuccess(resultObj: Data): DataState<ViewState>?
+
+    //added by me
+    abstract fun processSuccessfulResponse(resultObj: Data, stateEvent : StateEvent) : DataState<ViewState> ?
 
 }

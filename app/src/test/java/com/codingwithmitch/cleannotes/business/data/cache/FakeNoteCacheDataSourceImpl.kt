@@ -28,7 +28,7 @@ constructor(
         if(note.id.equals(FORCE_NEW_NOTE_EXCEPTION)){
             throw Exception("Something went wrong inserting the note.")
         }
-        if(note.id.equals(FORCE_GENERAL_FAILURE)){
+        if(note.id.equals(FORCE_GENERAL_FAILURE)){ //prueba
             return -1 // fail
         }
         notesData.put(note.id, note)

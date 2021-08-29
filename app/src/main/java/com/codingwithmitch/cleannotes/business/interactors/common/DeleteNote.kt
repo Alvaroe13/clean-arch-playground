@@ -72,6 +72,11 @@ class DeleteNote<ViewState>(
 
         }.execute()
 
+        updateNetwork(
+            message = response?.stateMessage?.response?.message ,
+            note = note
+        )
+
         emit(response)
     }
 

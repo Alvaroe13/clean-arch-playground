@@ -6,11 +6,16 @@ import com.codingwithmitch.cleannotes.framework.datasource.database.NoteDaoServi
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * The reason for building this class is to delegate the actions to the DAO, meaning that whenever
+ * "NteCacheDataSource" class is called, it will triggered this class and this class will
+ * trigger the DAO.
+ */
 @Singleton
 class NoteCacheSourceImpl
 @Inject
 constructor(
-    private val noteDao: NoteDaoService // TODO ( create class)
+    private val noteDao: NoteDaoService
 ) : NoteCacheDataSource {
 
     override suspend fun insertNote(note: Note): Long = noteDao.insertNote(note)

@@ -3,9 +3,11 @@ package com.codingwithmitch.cleannotes.business.data.cache
 import com.codingwithmitch.cleannotes.business.domain.state.*
 
 /**
- *  param "ViewState" = Indicates the view in the app where this class is called
- *  param "Data" = Indicates the type os result returned from this operation
- *  NOTE : See this class implementation in use-cases for visual explanation.
+ *  -param "ViewState" = Indicates the view in the app where this class is called
+ *  -param "Data" = Indicates the type os result returned from this operation, which is always the
+ *  type of the "response" param in the builder
+ *
+ *  -NOTE : See this class implementation in use-cases for visual explanation.
  */
 abstract class CacheResponseHandler<ViewState, Data>(
     private val response: CacheResult<Data?>,

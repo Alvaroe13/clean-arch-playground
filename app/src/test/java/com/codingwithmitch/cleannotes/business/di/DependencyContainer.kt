@@ -36,11 +36,12 @@ class DependencyContainer {
     // data sets
     lateinit var notesData: HashMap<String, Note>
 
-    fun build() {
+    fun build() : DependencyContainer {
         fakeNoteListInstance()
         noteFactoryInstance()
         remoteDatyaSourceInstance()
         cacheDataSourceInstance()
+        return this
     }
 
     private fun noteFactoryInstance() {

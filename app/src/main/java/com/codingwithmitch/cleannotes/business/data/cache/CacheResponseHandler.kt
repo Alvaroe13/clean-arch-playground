@@ -23,7 +23,9 @@ abstract class CacheResponseHandler<ViewState, Data>(
 
             is CacheResult.GenericError -> processErrorResult(response.errorMessage)
 
+
             is CacheResult.Success -> {
+                println("DeleteNotes, error occurred 5")
                 response.value?.let{
                     handleSuccess(resultObj = it)
                 } ?: processErrorResult(CacheErrors.CACHE_DATA_NULL)

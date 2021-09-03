@@ -1,9 +1,7 @@
 package com.codingwithmitch.cleannotes.business.interactors.notelist
 
-import com.codingwithmitch.cleannotes.business.data.cache.abstraction.NoteCacheDataSource
-import com.codingwithmitch.cleannotes.business.di.DependencyContainer
-import com.codingwithmitch.cleannotes.business.domain.model.NoteFactory
 import com.codingwithmitch.cleannotes.business.domain.state.DataState
+import com.codingwithmitch.cleannotes.business.interactors.BaseUseCaseToolsTest
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListStateEvent
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListViewState
 import junit.framework.Assert.assertEquals
@@ -21,21 +19,16 @@ Test cases:
     c) compare with the number of notes in the fake data set
 */
 @InternalCoroutinesApi
-class GetNumNotesTest {
+class GetNumNotesTest : BaseUseCaseToolsTest() {
 
     //system in test
-    private val getNumNotes: GetNumNotes
-
-    // dependencies
-    private val dependencyContainer: DependencyContainer
-    private val noteCacheDataSource: NoteCacheDataSource
-    private val noteFactory: NoteFactory
+    private lateinit var getNumNotes: GetNumNotes
 
     init {
-        dependencyContainer = DependencyContainer()
-        dependencyContainer.build()
-        noteCacheDataSource = dependencyContainer.noteCacheDataSource
-        noteFactory = dependencyContainer.noteFactory
+        initSystemInTest()
+    }
+
+    override fun initSystemInTest() {
         getNumNotes = GetNumNotes(
             noteCacheDataSource = noteCacheDataSource
         )

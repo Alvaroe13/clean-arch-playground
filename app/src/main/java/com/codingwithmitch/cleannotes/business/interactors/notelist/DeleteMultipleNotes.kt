@@ -88,7 +88,11 @@ class DeleteMultipleNotes(
                 stateEvent: StateEvent
             ): DataState<NoteListViewState>? {
                 // if -1 is error
-                if(resultObj < 0){ onDeleteError = true } else { successfulDeletes.add(note) }
+                if(resultObj < 0){
+                    onDeleteError = true
+                } else {
+                    successfulDeletes.add(note)
+                }
                 return null
             }
         }.execute()

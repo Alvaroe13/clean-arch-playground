@@ -2,18 +2,13 @@ package com.codingwithmitch.cleannotes.business.interactors.notelist
 
 import com.codingwithmitch.cleannotes.business.data.cache.CacheErrors
 import com.codingwithmitch.cleannotes.business.data.cache.FORCE_SEARCH_NOTES_EXCEPTION
-import com.codingwithmitch.cleannotes.business.data.cache.abstraction.NoteCacheDataSource
-import com.codingwithmitch.cleannotes.business.di.DependencyContainer
 import com.codingwithmitch.cleannotes.business.domain.model.Note
-import com.codingwithmitch.cleannotes.business.domain.model.NoteFactory
-import com.codingwithmitch.cleannotes.business.domain.state.DataState
+import com.codingwithmitch.cleannotes.business.interactors.BaseUseCaseToolsTest
 import com.codingwithmitch.cleannotes.business.interactors.notelist.SearchNotes.Companion.SEARCH_NOTES_NO_MATCHING_RESULTS
 import com.codingwithmitch.cleannotes.business.interactors.notelist.SearchNotes.Companion.SEARCH_NOTES_SUCCESS
 import com.codingwithmitch.cleannotes.framework.datasource.cache.NoteDao.ORDER_BY_ASC_DATE_UPDATED
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListStateEvent.SearchNotesEvent
-import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListViewState
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -39,21 +34,18 @@ Test cases:
     d) confirm there is notes in the cache
  */
 @InternalCoroutinesApi
-class SearchNotesTest {
+class SearchNotesTest : BaseUseCaseToolsTest() {
 
     // system in test
-    private val searchNotes: SearchNotes
+    private lateinit var searchNotes: SearchNotes
 
-    // dependencies
-    private val dependencyContainer: DependencyContainer
-    private val noteCacheDataSource: NoteCacheDataSource
-    private val noteFactory: NoteFactory
 
     init {
-        dependencyContainer = DependencyContainer()
-        dependencyContainer.build()
-        noteCacheDataSource = dependencyContainer.noteCacheDataSource
-        noteFactory = dependencyContainer.noteFactory
+        initSystemInTest()
+
+    }
+
+    override fun initSystemInTest() {
         searchNotes = SearchNotes(
             noteCacheDataSource = noteCacheDataSource
         )

@@ -3,10 +3,7 @@ package com.codingwithmitch.cleannotes.business.interactors.notelist
 import com.codingwithmitch.cleannotes.business.data.cache.CacheErrors
 import com.codingwithmitch.cleannotes.business.data.cache.FORCE_GENERAL_FAILURE
 import com.codingwithmitch.cleannotes.business.data.cache.FORCE_NEW_NOTE_EXCEPTION
-import com.codingwithmitch.cleannotes.business.data.cache.abstraction.NoteCacheDataSource
-import com.codingwithmitch.cleannotes.business.data.remote.abstraction.NoteRemoteDataSource
-import com.codingwithmitch.cleannotes.business.di.DependencyContainer
-import com.codingwithmitch.cleannotes.business.domain.model.NoteFactory
+import com.codingwithmitch.cleannotes.business.interactors.BaseUseCaseToolsTest
 import com.codingwithmitch.cleannotes.business.interactors.notelist.InsertNewNote.Companion.INSERT_NOTE_SUCCESS
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListStateEvent
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -17,31 +14,24 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import java.util.*
 
-class InsertNewNoteTest {
+class InsertNewNoteTest : BaseUseCaseToolsTest() {
 
     // system in test ( the one to be tested )
     private lateinit var insertNewNote: InsertNewNote
 
-    //dependencies
-    private val dependencyContainer: DependencyContainer = DependencyContainer()
-    private val noteCacheDataSource: NoteCacheDataSource
-    private val noteRemoteDataSource: NoteRemoteDataSource
-    private val noteFactory: NoteFactory
 
     init {
-        dependencyContainer.build()
-        noteCacheDataSource = dependencyContainer.noteCacheDataSource
-        noteRemoteDataSource = dependencyContainer.noteRemoteDataSource
-        noteFactory = dependencyContainer.noteFactory
+        initSystemInTest()
 
+    }
 
+    override fun initSystemInTest(){
         insertNewNote = InsertNewNote(
             noteCacheDataSource = noteCacheDataSource,
             noteNetworkDataSource = noteRemoteDataSource,
             noteFactory = noteFactory
         )
     }
-
 
     @Test
     fun insertNote_success_confirmNetworkAndCacheUpdated() = runBlocking {
@@ -130,4 +120,6 @@ class InsertNewNoteTest {
         val cacheNoteThatWasInserted = noteCacheDataSource.searchNoteById(newNote.id)
         assertTrue { cacheNoteThatWasInserted == null }
     }
+
+
 }

@@ -21,6 +21,8 @@ interface NoteCacheDataSource {
 
     suspend fun getNumNotes(): Int
 
+    suspend fun getAllNotes() : List<Note>
+
     /** for testing only */
     suspend fun insertNotes(notes: List<Note>): LongArray
 

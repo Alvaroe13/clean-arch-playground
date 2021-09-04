@@ -23,9 +23,7 @@ abstract class CacheResponseHandler<ViewState, Data>(
 
             is CacheResult.GenericError -> processErrorResult(response.errorMessage)
 
-
             is CacheResult.Success -> {
-                println("DeleteNotes, error occurred 5")
                 response.value?.let{
                     handleSuccess(resultObj = it)
                 } ?: processErrorResult(CacheErrors.CACHE_DATA_NULL)
@@ -52,6 +50,6 @@ abstract class CacheResponseHandler<ViewState, Data>(
     abstract suspend fun handleSuccess(resultObj: Data): DataState<ViewState>?
 
     //added by me
-    abstract fun processSuccessfulResponse(resultObj: Data, stateEvent : StateEvent) : DataState<ViewState> ?
+    abstract fun processSuccessfulResponse(resultObj: Data, stateEvent : StateEvent ?) : DataState<ViewState> ?
 
 }

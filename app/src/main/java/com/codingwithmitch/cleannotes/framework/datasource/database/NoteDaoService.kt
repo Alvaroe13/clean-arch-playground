@@ -54,4 +54,6 @@ interface NoteDaoService {
         filterAndOrder: String,
         page: Int
     ): List<Note>
+
+    suspend fun getAllNotes() : List<Note>
 }

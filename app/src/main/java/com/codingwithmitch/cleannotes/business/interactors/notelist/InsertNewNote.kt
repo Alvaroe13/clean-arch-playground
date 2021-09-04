@@ -47,7 +47,7 @@ class InsertNewNote(
 
             override fun processSuccessfulResponse(
                 resultObj: Long,
-                stateEvent: StateEvent
+                stateEvent: StateEvent ?
             ): DataState<NoteListViewState>? {
                 return if (resultObj > 0) {
 

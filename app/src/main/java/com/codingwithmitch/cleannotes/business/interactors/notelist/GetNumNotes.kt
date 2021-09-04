@@ -29,7 +29,7 @@ class GetNumNotes(
 
             override fun processSuccessfulResponse(
                 resultObj: Int,
-                stateEvent: StateEvent
+                stateEvent: StateEvent ?
             ): DataState<NoteListViewState>? {
 
                 val viewState = NoteListViewState(numNotesInCache = resultObj)

@@ -43,5 +43,7 @@ constructor(
 
     override suspend fun getNumNotes(): Int = noteDao.getNumNotes()
 
+    override suspend fun getAllNotes(): List<Note> = noteDao.getAllNotes()
+
     override suspend fun insertNotes(notes: List<Note>): LongArray = noteDao.insertNotes(notes)
 }

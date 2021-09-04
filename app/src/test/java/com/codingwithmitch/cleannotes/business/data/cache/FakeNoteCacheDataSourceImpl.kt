@@ -20,7 +20,7 @@ const val FORCE_GENERAL_FAILURE = "FORCE_GENERAL_FAILURE"
  */
 class FakeNoteCacheDataSourceImpl
 constructor(
-    private val notesData: HashMap<String, Note>,
+    private val notesData: HashMap<String, Note>, //fake data
     private val dateUtil: DateUtil
 ): NoteCacheDataSource{
 
@@ -109,6 +109,7 @@ constructor(
 
     override suspend fun getNumNotes(): Int = notesData.size
 
+    override suspend fun getAllNotes(): List<Note> = ArrayList(notesData.values)
 
     override suspend fun insertNotes(notes: List<Note>): LongArray {
         val results = LongArray(notes.size)

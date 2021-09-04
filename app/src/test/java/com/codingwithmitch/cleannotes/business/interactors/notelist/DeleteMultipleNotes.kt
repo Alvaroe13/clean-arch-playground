@@ -55,7 +55,6 @@ class DeleteMultipleNotesTestUseCase : BaseUseCaseToolsTest() {
     // system in test
     private var deleteMultipleNotes: DeleteMultipleNotes? = null
 
-
     init {
         initSystemInTest()
     }

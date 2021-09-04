@@ -14,6 +14,28 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import java.util.*
 
+/*
+Test cases:
+1. insertNote_success_confirmNetworkAndCacheUpdated()
+    a) insert a new note
+    b) listen for INSERT_NOTE_SUCCESS emission from flow
+    c) confirm cache was updated with new note
+    d) confirm network was updated with new note
+2. insertNote_fail_confirmNetworkAndCacheUnchanged()
+    a) insert a new note
+    b) force a failure (return -1 from db operation)
+    c) listen for INSERT_NOTE_FAILED emission from flow
+    e) confirm cache was not updated
+    e) confirm network was not updated
+3. throwException_checkGenericError_confirmNetworkAndCacheUnchanged()
+    a) insert a new note
+    b) force an exception
+    c) listen for CACHE_ERROR_UNKNOWN emission from flow
+    e) confirm cache was not updated
+    e) confirm network was not updated
+ */
+
+@InternalCoroutinesApi
 class InsertNewNoteTest : BaseUseCaseToolsTest() {
 
     // system in test ( the one to be tested )

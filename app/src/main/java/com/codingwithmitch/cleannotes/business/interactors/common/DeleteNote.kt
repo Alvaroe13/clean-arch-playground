@@ -41,7 +41,7 @@ class DeleteNote<ViewState>(
 
             override fun processSuccessfulResponse(
                 resultObj: Int,
-                stateEvent: StateEvent
+                stateEvent: StateEvent ?
             ): DataState<ViewState>? {
 
                 return if ( resultObj > 0){

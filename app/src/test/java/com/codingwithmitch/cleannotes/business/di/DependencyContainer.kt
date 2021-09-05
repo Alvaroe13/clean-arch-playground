@@ -23,7 +23,7 @@ class DependencyContainer {
     }
 
     private val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH)
-    val dateUitl = DateUtil(dateFormat)
+    private val dateUtil = DateUtil(dateFormat)
     lateinit var noteRemoteDataSource: NoteRemoteDataSource
     lateinit var noteCacheDataSource: NoteCacheDataSource
     lateinit var noteFactory: NoteFactory
@@ -37,32 +37,34 @@ class DependencyContainer {
     lateinit var notesData: HashMap<String, Note>
 
     fun build() : DependencyContainer {
-        fakeNoteListInstance()
-        noteFactoryInstance()
-        remoteDatyaSourceInstance()
-        cacheDataSourceInstance()
+        initFakeNoteListInstance()
+        initNoteFactoryInstance()
+        initRemoteDataSourceInstance()
+        initCacheDataSourceInstance()
         return this
     }
 
-    private fun noteFactoryInstance() {
-        noteFactory = NoteFactory(dateUitl)
+    private fun initNoteFactoryInstance() {
+        noteFactory = NoteFactory(dateUtil)
     }
 
-    private fun remoteDatyaSourceInstance() {
+    /** Here we feed fake remote source with notes */
+    private fun initRemoteDataSourceInstance() {
         noteRemoteDataSource = FakeNoteNetworkDataSourceImpl(
             notesData = notesData,
             deletedNotesData = HashMap()
         )
     }
 
-    private fun cacheDataSourceInstance() {
+    /** Here we feed fake cache source with notes */
+    private fun initCacheDataSourceInstance() {
         noteCacheDataSource = FakeNoteCacheDataSourceImpl(
             notesData = notesData,
-            dateUtil = dateUitl
+            dateUtil = dateUtil
         )
     }
 
-    private fun fakeNoteListInstance() {
+    private fun initFakeNoteListInstance() {
         // data sets
         this.javaClass.classLoader?.let {
             noteDataFactory = NoteDataFactory(it)

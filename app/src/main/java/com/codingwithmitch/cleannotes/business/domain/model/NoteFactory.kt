@@ -24,14 +24,14 @@ constructor(
     }
 
     /**
-     * NOTE : used for testing purposes
+     * NOTE : used for testing purposes ONLY
      */
     fun createNoteList(numNotes: Int): List<Note> {
         val list: ArrayList<Note> = ArrayList()
         for (i in 0 until numNotes) { // exclusive on upper bound
             list.add(
                 createSingleNote(
-                    id = UUID.randomUUID().toString(),
+                    id = null,
                     title = UUID.randomUUID().toString(),
                     body = UUID.randomUUID().toString()
                 )

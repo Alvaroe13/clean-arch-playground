@@ -4,6 +4,10 @@ import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 
+/**
+ * Tis class create a fake set of notes to use for testing only. retrieving fake data from
+ * json file "note_list.json" in "res" folder
+ */
 class NoteDataFactory(
     private val testClassLoader: ClassLoader
 ) {

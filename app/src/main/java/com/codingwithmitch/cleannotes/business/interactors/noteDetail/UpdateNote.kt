@@ -40,7 +40,7 @@ class UpdateNote(
 
             override fun processSuccessfulResponse(
                 resultObj: Int,
-                stateEvent: StateEvent
+                stateEvent: StateEvent ?
             ): DataState<NoteDetailViewState>? {
                 return if(resultObj > 0){
                     DataState.data(

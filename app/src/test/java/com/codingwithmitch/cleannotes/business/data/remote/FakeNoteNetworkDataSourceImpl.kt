@@ -10,7 +10,7 @@ constructor(
 ) : NoteRemoteDataSource{
 
     override suspend fun insertOrUpdateNote(note: Note) {
-        notesData.put(note.id, note)
+        notesData[note.id] = note
     }
 
     override suspend fun deleteNote(primaryKey: String) {
@@ -18,12 +18,12 @@ constructor(
     }
 
     override suspend fun insertDeletedNote(note: Note) {
-        deletedNotesData.put(note.id, note)
+        deletedNotesData[note.id] = note
     }
 
     override suspend fun insertDeletedNotes(notes: List<Note>) {
         for(note in notes){
-            deletedNotesData.put(note.id, note)
+            deletedNotesData[note.id] = note
         }
     }
 
@@ -31,25 +31,17 @@ constructor(
         deletedNotesData.remove(note.id)
     }
 
-    override suspend fun getDeletedNotes(): List<Note> {
-        return ArrayList(deletedNotesData.values)
-    }
+    override suspend fun getDeletedNotes(): List<Note> = ArrayList(deletedNotesData.values)
 
-    override suspend fun deleteAllNotes() {
-        deletedNotesData.clear()
-    }
+    override suspend fun deleteAllNotes() = deletedNotesData.clear()
 
-    override suspend fun searchNote(note: Note): Note? {
-        return notesData.get(note.id)
-    }
+    override suspend fun searchNote(note: Note): Note? = notesData[note.id]
 
-    override suspend fun getAllNotes(): List<Note> {
-        return ArrayList(notesData.values)
-    }
+    override suspend fun getAllNotes(): List<Note> = ArrayList(notesData.values)
 
     override suspend fun insertOrUpdateNotes(notes: List<Note>) {
         for(note in notes){
-            notesData.put(note.id, note)
+            notesData[note.id] = note
         }
     }
 }

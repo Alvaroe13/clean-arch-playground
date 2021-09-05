@@ -1,8 +1,9 @@
-package com.codingwithmitch.cleannotes.framework.datasource.database
+package com.codingwithmitch.cleannotes.framework.datasource.cache.database
 
 import com.codingwithmitch.cleannotes.business.domain.model.Note
-import com.codingwithmitch.cleannotes.framework.datasource.cache.NoteDao
+import com.codingwithmitch.cleannotes.framework.datasource.cache.NOTE_PAGINATION_PAGE_SIZE
 
+// not sure we're gonna be using this class anymore. since "NoteDao.kt" was created
 interface NoteDaoService {
 
     suspend fun insertNote(note: Note): Long
@@ -26,25 +27,25 @@ interface NoteDaoService {
     suspend fun searchNotesOrderByDateDESC(
         query: String,
         page: Int,
-        pageSize: Int = NoteDao.NOTE_PAGINATION_PAGE_SIZE
+        pageSize: Int = NOTE_PAGINATION_PAGE_SIZE
     ): List<Note>
 
     suspend fun searchNotesOrderByDateASC(
         query: String,
         page: Int,
-        pageSize: Int = NoteDao.NOTE_PAGINATION_PAGE_SIZE
+        pageSize: Int = NOTE_PAGINATION_PAGE_SIZE
     ): List<Note>
 
     suspend fun searchNotesOrderByTitleDESC(
         query: String,
         page: Int,
-        pageSize: Int = NoteDao.NOTE_PAGINATION_PAGE_SIZE
+        pageSize: Int = NOTE_PAGINATION_PAGE_SIZE
     ): List<Note>
 
     suspend fun searchNotesOrderByTitleASC(
         query: String,
         page: Int,
-        pageSize: Int = NoteDao.NOTE_PAGINATION_PAGE_SIZE
+        pageSize: Int = NOTE_PAGINATION_PAGE_SIZE
     ): List<Note>
 
     suspend fun getNumNotes(): Int

@@ -77,10 +77,13 @@ dependencies {
     implementation Dependencies.firebase_crashlytics
     implementation Dependencies.retrofit
     implementation Dependencies.retrofit_gson
+    implementation Dependencies.room_runtime
+    implementation Dependencies.room_ktx
 
 
     // Annotation Processing
     kapt AnnotationProcessing.dagger_compiler
+    kapt AnnotationProcessing.room_compiler
 
     // Support
     implementation SupportDependencies.appcompat

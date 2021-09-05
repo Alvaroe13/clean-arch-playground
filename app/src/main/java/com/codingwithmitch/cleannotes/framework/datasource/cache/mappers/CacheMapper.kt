@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.framework.datasource.cache.util
+package com.codingwithmitch.cleannotes.framework.datasource.cache.mappers
 
 import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.business.domain.util.EntityMapper
@@ -17,7 +17,7 @@ constructor() : EntityMapper<NoteCacheEntity, Note> {
     fun entityListToNoteList(entities: List<NoteCacheEntity>): List<Note>{
         val list: ArrayList<Note> = ArrayList()
         for(entity in entities){
-            list.add( mapDomainModelFromEntity(entity) )
+            list.add( mapNoteFromEntity(entity) )
         }
         return list
     }
@@ -25,12 +25,12 @@ constructor() : EntityMapper<NoteCacheEntity, Note> {
     fun noteListToEntityList(notes: List<Note>): List<NoteCacheEntity>{
         val entities: ArrayList<NoteCacheEntity> = ArrayList()
         for(note in notes){
-            entities.add( mapEntityFromDomainModel(note) )
+            entities.add( mapEntityFromNote(note) )
         }
         return entities
     }
 
-    override fun mapDomainModelFromEntity(entity: NoteCacheEntity): Note {
+    override fun mapNoteFromEntity(entity: NoteCacheEntity): Note {
         return Note(
             id = entity.id,
             title = entity.title,
@@ -40,7 +40,7 @@ constructor() : EntityMapper<NoteCacheEntity, Note> {
         )
     }
 
-    override fun mapEntityFromDomainModel(domainModel: Note): NoteCacheEntity {
+    override fun mapEntityFromNote(domainModel: Note): NoteCacheEntity {
         return NoteCacheEntity(
             id = domainModel.id,
             title = domainModel.title,

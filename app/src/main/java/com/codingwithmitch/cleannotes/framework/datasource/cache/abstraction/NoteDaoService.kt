@@ -1,9 +1,8 @@
-package com.codingwithmitch.cleannotes.framework.datasource.cache.database
+package com.codingwithmitch.cleannotes.framework.datasource.cache.abstraction
 
 import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.framework.datasource.cache.NOTE_PAGINATION_PAGE_SIZE
 
-// not sure we're gonna be using this class anymore. since "NoteDao.kt" was created
 interface NoteDaoService {
 
     suspend fun insertNote(note: Note): Long

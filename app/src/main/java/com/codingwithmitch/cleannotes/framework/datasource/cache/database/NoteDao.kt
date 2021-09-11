@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.framework.datasource.cache
+package com.codingwithmitch.cleannotes.framework.datasource.cache.database
 
 import androidx.room.Dao
 import androidx.room.Insert

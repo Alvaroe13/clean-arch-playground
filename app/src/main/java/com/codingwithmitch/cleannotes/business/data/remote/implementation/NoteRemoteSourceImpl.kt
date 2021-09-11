@@ -2,7 +2,7 @@ package com.codingwithmitch.cleannotes.business.data.remote.implementation
 
 import com.codingwithmitch.cleannotes.business.data.remote.abstraction.NoteRemoteDataSource
 import com.codingwithmitch.cleannotes.business.domain.model.Note
-import com.codingwithmitch.cleannotes.framework.datasource.network.NoteFirestoreService
+import com.codingwithmitch.cleannotes.framework.datasource.network.abstraction.NoteFirestoreService
 import javax.inject.Inject
 import javax.inject.Singleton
 

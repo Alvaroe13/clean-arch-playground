@@ -4,6 +4,7 @@ import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.framework.datasource.network.abstraction.NoteFirestoreService
 import com.codingwithmitch.cleannotes.framework.datasource.network.mappers.NetworkMapper
 import com.codingwithmitch.cleannotes.framework.datasource.network.model.NoteNetworkEntity
+import com.codingwithmitch.cleannotes.util.crashLog
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -36,6 +37,9 @@ constructor(
         getNotesNode()
             .document(noteEntity.id)
             .set(noteEntity)
+            .addOnFailureListener {
+                crashLog( it.message )
+            }
             .await()
     }
 
@@ -53,13 +57,19 @@ constructor(
                 val documentRef = collectionRef.document(it.id)
                 writeBatch.set(documentRef, entity)
             }
-        }.await()
+        }.addOnFailureListener {
+                crashLog(it.message)
+            }
+            .await()
     }
 
     override suspend fun deleteNote(primaryKey: String) {
         getNotesNode()
             .document(primaryKey)
             .delete()
+            .addOnFailureListener {
+                crashLog(it.message)
+            }
             .await()
     }
 
@@ -69,6 +79,9 @@ constructor(
         getDeletesNode()
             .document(noteEntity.id)
             .set(noteEntity)
+            .addOnFailureListener {
+                crashLog( it.message )
+            }
             .await()
     }
 
@@ -84,7 +97,10 @@ constructor(
                 val documentRef = deletesCollectionRef.document(it.id)
                 writeBatch.set(documentRef, networkMapper.mapEntityFromNote(it))
             }
-        }.await()
+        }
+            .addOnFailureListener {
+                crashLog( it.message )
+            } .await()
 
     }
 
@@ -93,6 +109,9 @@ constructor(
         getDeletesNode()
             .document(entity.id)
             .delete()
+            .addOnFailureListener {
+                crashLog( it.message )
+            }
             .await()
     }
 
@@ -102,11 +121,17 @@ constructor(
             .collection(NOTES_COLLECTION)
             .document(USER_ID)
             .delete()
+            .addOnFailureListener {
+                crashLog( it.message )
+            }
             .await()
         firestore
             .collection(DELETES_COLLECTION)
             .document(USER_ID)
             .delete()
+            .addOnFailureListener {
+                crashLog( it.message )
+            }
             .await()
     }
 
@@ -114,6 +139,9 @@ constructor(
         networkMapper.entityListToNoteList(
             getDeletesNode()
                 .get()
+                .addOnFailureListener {
+                    crashLog( it.message )
+                }
                 .await()
                 .toObjects(NoteNetworkEntity::class.java)
         )
@@ -123,6 +151,9 @@ constructor(
         getNotesNode()
             .document(note.id)
             .get()
+            .addOnFailureListener {
+                crashLog( it.message )
+            }
             .await()
             .toObject(NoteNetworkEntity::class.java)?.let {
                 networkMapper.mapNoteFromEntity(it)
@@ -133,6 +164,9 @@ constructor(
         networkMapper.entityListToNoteList(
             getNotesNode()
                 .get()
+                .addOnFailureListener {
+                    crashLog( it.message )
+                }
                 .await()
                 .toObjects(NoteNetworkEntity::class.java)
         )

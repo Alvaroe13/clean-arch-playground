@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.business.data.uitl
+package com.codingwithmitch.cleannotes.business.data.util
 
 import com.codingwithmitch.cleannotes.business.data.cache.CacheConstants.CACHE_TIMEOUT
 import com.codingwithmitch.cleannotes.business.data.cache.CacheErrors.CACHE_ERROR_TIMEOUT

@@ -3,8 +3,8 @@ package com.codingwithmitch.cleannotes.business.interactors.notelist
 import com.codingwithmitch.cleannotes.business.data.cache.CacheResponseHandler
 import com.codingwithmitch.cleannotes.business.data.cache.abstraction.NoteCacheDataSource
 import com.codingwithmitch.cleannotes.business.data.remote.abstraction.NoteRemoteDataSource
-import com.codingwithmitch.cleannotes.business.data.uitl.safeApiCall
-import com.codingwithmitch.cleannotes.business.data.uitl.safeCacheCall
+import com.codingwithmitch.cleannotes.business.data.util.safeApiCall
+import com.codingwithmitch.cleannotes.business.data.util.safeCacheCall
 import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.business.domain.state.*
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListViewState

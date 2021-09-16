@@ -38,4 +38,5 @@ object Versions {
     val androidx_test_ext = "1.1.1"
     val crashlytics_gradle_build = "2.7.1"
     val crashlytics_gradle = "18.2.1" 
+    val delegate_fragment = "1.3.4"
 }

@@ -85,6 +85,7 @@ dependencies {
     implementation Dependencies.room_ktx
     implementation Dependencies.firebase_analytics
     implementation Dependencies.firebase_crashlytics
+    implementation Dependencies.viewModelFragmentDelegate
 
 
     // Annotation Processing

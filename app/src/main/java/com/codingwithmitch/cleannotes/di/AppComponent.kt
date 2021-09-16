@@ -14,7 +14,8 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        ProductionModule::class
+        ProductionModule::class,
+        NoteViewModelModule::class
     ]
 )
 interface AppComponent {

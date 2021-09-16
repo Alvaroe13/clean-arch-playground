@@ -1,8 +1,8 @@
 package com.codingwithmitch.cleannotes.framework.presentation
 
 import android.app.Application
-import com.codingwithmitch.cleannotes.business.di.AppComponent
-import com.codingwithmitch.cleannotes.business.di.DaggerAppComponent
+import com.codingwithmitch.cleannotes.di.AppComponent
+import com.codingwithmitch.cleannotes.di.DaggerAppComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -14,11 +14,11 @@ open class BaseApplication : Application(){
 
     override fun onCreate() {
         super.onCreate()
-        initAppCOmponent()
+        initAppComponent()
     }
 
 
-    open fun initAppCOmponent(){
+    open fun initAppComponent(){
         appComponent = DaggerAppComponent.factory().create( this )
     }
 }

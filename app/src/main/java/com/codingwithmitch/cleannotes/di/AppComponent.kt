@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.business.di
+package com.codingwithmitch.cleannotes.di
 
 import com.codingwithmitch.cleannotes.framework.presentation.BaseApplication
 import com.codingwithmitch.cleannotes.framework.presentation.MainActivity
@@ -11,15 +11,19 @@ import javax.inject.Singleton
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Singleton
-@Component(modules = [AppModule::class, ProductionModule::class])
+@Component(
+    modules = [
+        AppModule::class,
+        ProductionModule::class
+    ]
+)
 interface AppComponent {
 
-
     @Component.Factory
-    interface Factory{
-        fun create( @BindsInstance app : BaseApplication) : AppComponent
+    interface Factory {
+        fun create(@BindsInstance app: BaseApplication): AppComponent
     }
 
-    fun inject( mainActivity: MainActivity)
+    fun inject(mainActivity: MainActivity)
 
 }

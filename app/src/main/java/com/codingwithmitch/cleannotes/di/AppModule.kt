@@ -1,4 +1,4 @@
-package com.codingwithmitch.cleannotes.business.di
+package com.codingwithmitch.cleannotes.di
 
 import android.content.SharedPreferences
 import com.codingwithmitch.cleannotes.business.data.cache.abstraction.NoteCacheDataSource

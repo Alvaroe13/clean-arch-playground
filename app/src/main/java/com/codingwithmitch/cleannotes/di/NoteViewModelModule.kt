@@ -5,6 +5,7 @@ import com.codingwithmitch.cleannotes.business.domain.model.NoteFactory
 import com.codingwithmitch.cleannotes.business.interactors.notedetail.NoteDetailInteractors
 import com.codingwithmitch.cleannotes.business.interactors.notelist.NoteListInteractors
 import com.codingwithmitch.cleannotes.framework.presentation.common.NoteViewModelFactory
+import com.codingwithmitch.cleannotes.framework.presentation.splash.NoteNetworkSyncManager
 import com.google.android.datatransport.runtime.dagger.Provides
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -21,6 +22,7 @@ object NoteViewModelModule {
     fun provideNoteViewMOdelFactory(
         noteListInteractors: NoteListInteractors,
         noteDetailInteractors: NoteDetailInteractors,
+        noteNetworkSyncManager: NoteNetworkSyncManager,
         noteFactory: NoteFactory,
         editor: SharedPreferences.Editor,
         sharedPreferences: SharedPreferences
@@ -29,6 +31,7 @@ object NoteViewModelModule {
         NoteViewModelFactory(
             noteListInteractors = noteListInteractors,
             noteDetailInteractors = noteDetailInteractors,
+            noteNetworkSyncManager = noteNetworkSyncManager,
             noteFactory = noteFactory,
             editor = editor,
             sharedPreferences = sharedPreferences

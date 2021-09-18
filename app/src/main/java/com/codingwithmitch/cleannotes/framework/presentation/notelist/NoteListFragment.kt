@@ -10,11 +10,9 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +34,6 @@ import com.codingwithmitch.cleannotes.framework.presentation.BaseApplication
 import com.codingwithmitch.cleannotes.framework.presentation.UIController
 import com.codingwithmitch.cleannotes.framework.presentation.common.BaseNoteFragment
 import com.codingwithmitch.cleannotes.framework.presentation.common.hideKeyboard
-import com.codingwithmitch.cleannotes.framework.presentation.notedetail.NOTE_DETAIL_SELECTED_NOTE_BUNDLE_KEY
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListStateEvent.*
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListToolbarState.*
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListViewState
@@ -46,18 +43,22 @@ import kotlinx.android.synthetic.main.fragment_note_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
-const val NOTE_LIST_STATE_BUNDLE_KEY =
-    "com.codingwithmitch.cleannotes.notes.framework.presentation.notelist.state"
+
+const val NOTE_LIST_STATE_BUNDLE_KEY = "com.codingwithmitch.cleannotes.notes.framework.presentation.notelist.state"
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class NoteListFragment(
-    private val vmFactory: ViewModelProvider.Factory,
+class NoteListFragment
+constructor(
+    private val viewModelFactory: ViewModelProvider.Factory,
     private val dateUtil: DateUtil
-) : BaseNoteFragment(R.layout.fragment_note_list), NoteListAdapter.Interaction, ItemTouchHelperAdapter {
+): BaseNoteFragment(R.layout.fragment_note_list),
+    NoteListAdapter.Interaction,
+    ItemTouchHelperAdapter
+{
 
     val viewModel: NoteListViewModel by viewModels {
-        vmFactory
+        viewModelFactory
     }
 
     lateinit var uiController: UIController
@@ -233,7 +234,7 @@ class NoteListFragment(
     private fun setupFAB(){
         add_new_note_fab.setOnClickListener {
             uiController.displayInputCaptureDialog(
-                getString(R.string.text_enter_a_title),
+                getString(com.codingwithmitch.cleannotes.R.string.text_enter_a_title),
                 object: DialogInputCaptureCallback {
                     override fun onTextCaptured(text: String) {
                         val newNote = viewModel.createNewNote(title = text)
@@ -353,12 +354,12 @@ class NoteListFragment(
     }
 
     private fun navigateToDetailFragment(selectedNote: Note){
-        val bundle = bundleOf(NOTE_DETAIL_SELECTED_NOTE_BUNDLE_KEY to selectedNote)
-        findNavController().navigate(
-            R.id.action_note_list_fragment_to_noteDetailFragment,
-            bundle
-        )
-        viewModel.setNote(null)
+//        val bundle = bundleOf(NOTE_DETAIL_SELECTED_NOTE_BUNDLE_KEY to selectedNote)
+//        findNavController().navigate(
+//            R.id.action_note_list_fragment_to_noteDetailFragment,
+//            bundle
+//        )
+//        viewModel.setNote(null)
     }
 
     private fun setupUI(){
@@ -547,45 +548,3 @@ class NoteListFragment(
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

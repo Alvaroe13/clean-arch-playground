@@ -23,7 +23,7 @@ class DeleteNote<ViewState>(
 
     fun deleteNote(
         note : Note,
-        stateEvent: NoteListStateEvent
+        stateEvent: StateEvent
     ): Flow<DataState<ViewState>?> = flow{
 
         /** Int returned is the column deleted or "-1" if deletion failed */

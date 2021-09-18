@@ -2,15 +2,19 @@ package com.codingwithmitch.cleannotes.framework.presentation.notelist
 
 import android.content.SharedPreferences
 import android.os.Parcelable
+import androidx.lifecycle.LiveData
 import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.business.domain.model.NoteFactory
 import com.codingwithmitch.cleannotes.business.domain.state.*
+import com.codingwithmitch.cleannotes.business.interactors.notelist.DeleteMultipleNotes.Companion.DELETE_NOTES_YOU_MUST_SELECT
 import com.codingwithmitch.cleannotes.business.interactors.notelist.NoteListInteractors
 import com.codingwithmitch.cleannotes.framework.datasource.cache.database.NOTE_FILTER_DATE_CREATED
 import com.codingwithmitch.cleannotes.framework.datasource.cache.database.NOTE_ORDER_DESC
 import com.codingwithmitch.cleannotes.framework.datasource.preferences.PreferenceKeys
 import com.codingwithmitch.cleannotes.framework.presentation.common.BaseViewModel
+import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListInteractionManager
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListStateEvent
+import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListToolbarState
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListViewState
 import com.codingwithmitch.cleannotes.util.printLogD
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,6 +34,11 @@ constructor(
     private val sharedPreferences: SharedPreferences
 ) : BaseViewModel<NoteListViewState>() {
 
+
+    val noteListInteractionManager = NoteListInteractionManager()
+
+    val toolbarState: LiveData<NoteListToolbarState>
+        get() = noteListInteractionManager.toolbarState
 
 
     init {
@@ -134,6 +143,25 @@ constructor(
         launchJob(stateEvent, job)
     }
 
+    /*
+    State
+    */
+    fun getSelectedNotes() = noteListInteractionManager.getSelectedNotes()
+
+    fun setToolbarState(state: NoteListToolbarState)
+            = noteListInteractionManager.setToolbarState(state)
+
+    fun isMultiSelectionStateActive()
+            = noteListInteractionManager.isMultiSelectionStateActive()
+
+    fun addOrRemoveNoteFromSelectedList(note: Note)
+            = noteListInteractionManager.addOrRemoveNoteFromSelectedList(note)
+
+    fun isNoteSelected(note: Note): Boolean
+            = noteListInteractionManager.isNoteSelected(note)
+
+    fun clearSelectedNotes() = noteListInteractionManager.clearSelectedNotes()
+
     fun getFilter(): String {
         return getCurrentViewStateOrNew().filter
             ?: NOTE_FILTER_DATE_CREATED
@@ -191,7 +219,7 @@ constructor(
 
     /*
     Setters
- */
+    */
     private fun setNoteListData(notesList: ArrayList<Note>){
         val update = getCurrentViewStateOrNew()
         update.noteList = notesList
@@ -335,7 +363,35 @@ constructor(
 
     /*
     StateEvent Triggers
- */
+    */
+
+    fun deleteNotes(){
+        if(getSelectedNotes().size > 0){
+            setStateEvent(NoteListStateEvent.DeleteMultipleNotesEvent(getSelectedNotes()))
+            removeSelectedNotesFromList()
+        }
+        else{
+            setStateEvent(
+                NoteListStateEvent.CreateStateMessageEvent(
+                    stateMessage = StateMessage(
+                        response = Response(
+                            message = DELETE_NOTES_YOU_MUST_SELECT,
+                            uiComponentType = UIComponentType.Toast(),
+                            messageType = MessageType.Info()
+                        )
+                    )
+                )
+            )
+        }
+    }
+
+    private fun removeSelectedNotesFromList(){
+        val update = getCurrentViewStateOrNew()
+        update.noteList?.removeAll(getSelectedNotes())
+        setViewState(update)
+        clearSelectedNotes()
+    }
+
     fun isDeletePending(): Boolean{
         val pendingNote = getCurrentViewStateOrNew().notePendingDelete
         if(pendingNote != null){

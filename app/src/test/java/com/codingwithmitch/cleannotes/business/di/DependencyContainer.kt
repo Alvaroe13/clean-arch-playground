@@ -33,9 +33,6 @@ class DependencyContainer {
         isUnitTest = true // for logger.kt
     }
 
-    // data sets
-    lateinit var notesData: HashMap<String, Note>
-
     fun build() : DependencyContainer {
         initFakeNoteListInstance()
         initNoteFactoryInstance()
@@ -51,7 +48,9 @@ class DependencyContainer {
     /** Here we feed fake remote source with notes */
     private fun initRemoteDataSourceInstance() {
         noteRemoteDataSource = FakeNoteNetworkDataSourceImpl(
-            notesData = notesData,
+            notesData = noteDataFactory.produceHashMapOfNotes(
+                noteDataFactory.produceListOfNotes()
+            ),
             deletedNotesData = HashMap()
         )
     }
@@ -59,7 +58,9 @@ class DependencyContainer {
     /** Here we feed fake cache source with notes */
     private fun initCacheDataSourceInstance() {
         noteCacheDataSource = FakeNoteCacheDataSourceImpl(
-            notesData = notesData,
+            notesData = noteDataFactory.produceHashMapOfNotes(
+                noteDataFactory.produceListOfNotes()
+            ),
             dateUtil = dateUtil
         )
     }
@@ -68,11 +69,6 @@ class DependencyContainer {
         // data sets
         this.javaClass.classLoader?.let {
             noteDataFactory = NoteDataFactory(it)
-
-            // fake data set
-            notesData = noteDataFactory.produceHashMapOfNotes(
-                noteDataFactory.produceListOfNotes()
-            )
         }
     }
 }

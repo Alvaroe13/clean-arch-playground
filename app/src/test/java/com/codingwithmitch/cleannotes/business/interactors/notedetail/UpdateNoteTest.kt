@@ -56,11 +56,15 @@ class UpdateNoteTest : BaseUseCaseToolsTest() {
 
         val randomNote = noteCacheDataSource.searchNotes("", "", 1)
             .get(0)
-        val updatedNote = noteFactory.createSingleNote(
+        // bug fix start
+        val updatedNote = Note(
             id = randomNote.id,
             title = UUID.randomUUID().toString(),
-            body = UUID.randomUUID().toString()
+            body = UUID.randomUUID().toString(),
+            updated_at = dateUtil.getCurrentTimestamp(),
+            created_at = randomNote.created_at
         )
+        // bug fix end
         updateNote.updateNote(
             note = updatedNote,
             stateEvent = NoteDetailStateEvent.UpdateNoteEvent()

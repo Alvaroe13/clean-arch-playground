@@ -15,7 +15,7 @@ class NoteDataFactory(
     fun produceListOfNotes(): List<Note> {
         return Gson()
             .fromJson(
-                getNotesFromFile( JSON_FILE_NAME ),
+                getNotesFromFile(JSON_FILE_NAME),
                 object : TypeToken<List<Note>>() {}.type
             )
     }

@@ -7,19 +7,21 @@ import com.codingwithmitch.cleannotes.business.interactors.notelist.NoteListInte
 import com.codingwithmitch.cleannotes.framework.presentation.common.NoteViewModelFactory
 import com.codingwithmitch.cleannotes.framework.presentation.splash.NoteNetworkSyncManager
 import com.google.android.datatransport.runtime.dagger.Provides
+import dagger.Module
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Singleton
 
 @ExperimentalCoroutinesApi
 @FlowPreview
+@Module
 object NoteViewModelModule {
 
 
     @Singleton
     @JvmStatic
     @Provides
-    fun provideNoteViewMOdelFactory(
+    fun provideNoteViewModelFactory(
         noteListInteractors: NoteListInteractors,
         noteDetailInteractors: NoteDetailInteractors,
         noteNetworkSyncManager: NoteNetworkSyncManager,

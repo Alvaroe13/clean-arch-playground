@@ -18,7 +18,8 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         ProductionModule::class,
-        NoteViewModelModule::class
+        NoteViewModelModule::class,
+        NoteFragmentFactoryModule::class
     ]
 )
 interface AppComponent {

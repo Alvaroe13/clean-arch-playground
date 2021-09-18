@@ -86,6 +86,10 @@ dependencies {
     implementation Dependencies.firebase_analytics
     implementation Dependencies.firebase_crashlytics
     implementation Dependencies.viewModelFragmentDelegate
+    implementation Dependencies.navigation_fragment
+    implementation Dependencies.navigation_ui
+    implementation Dependencies.material_dialogs
+    implementation Dependencies.material_dialogs_input
 
 
     // Annotation Processing

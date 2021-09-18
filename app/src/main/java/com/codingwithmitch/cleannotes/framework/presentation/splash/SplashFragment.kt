@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.codingwithmitch.cleannotes.R
+import com.codingwithmitch.cleannotes.framework.presentation.BaseApplication
 import com.codingwithmitch.cleannotes.framework.presentation.common.BaseNoteFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -22,11 +24,17 @@ class SplashFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navNoteListFragment()
     }
 
+    private fun navNoteListFragment(){
+        findNavController().navigate(R.id.action_splashFragment_to_noteListFragment)
+    }
 
     override fun inject() {
-        TODO("prepare dagger")
+        activity?.run {
+            (application as BaseApplication).appComponent
+        }?: throw Exception("AppComponent is null.")
     }
 
 }

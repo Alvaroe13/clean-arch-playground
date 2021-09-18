@@ -66,7 +66,7 @@ class InsertNewNoteTest : BaseUseCaseToolsTest() {
         insertNewNote.insertNewNote(
             id = newNote.id,
             title = newNote.title,
-            stateEvent = NoteListStateEvent.InsertNewNoteEvent(newNote.title, newNote.body)
+            stateEvent = NoteListStateEvent.InsertNewNoteEvent(newNote.title)
         ).collect {
             assertEquals(
                 it?.stateMessage?.response?.message,
@@ -96,7 +96,7 @@ class InsertNewNoteTest : BaseUseCaseToolsTest() {
         insertNewNote.insertNewNote(
             id = newNote.id,
             title = newNote.title,
-            stateEvent = NoteListStateEvent.InsertNewNoteEvent(newNote.title, newNote.body)
+            stateEvent = NoteListStateEvent.InsertNewNoteEvent(newNote.title)
         ).collect {
             assertEquals(
                 it?.stateMessage?.response?.message,
@@ -126,7 +126,7 @@ class InsertNewNoteTest : BaseUseCaseToolsTest() {
         insertNewNote.insertNewNote(
             id = newNote.id,
             title = newNote.title,
-            stateEvent = NoteListStateEvent.InsertNewNoteEvent(newNote.title, newNote.body)
+            stateEvent = NoteListStateEvent.InsertNewNoteEvent(newNote.title)
         ).collect {
             assert(
                 it?.stateMessage?.response?.message

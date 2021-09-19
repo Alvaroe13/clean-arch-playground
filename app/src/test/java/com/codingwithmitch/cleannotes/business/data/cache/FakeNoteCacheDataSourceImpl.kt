@@ -4,7 +4,7 @@ package com.codingwithmitch.cleannotes.business.data.cache
 import com.codingwithmitch.cleannotes.business.data.cache.abstraction.NoteCacheDataSource
 import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.business.domain.util.DateUtil
-import com.codingwithmitch.cleannotes.framework.datasource.cache.NoteDao.NOTE_PAGINATION_PAGE_SIZE
+import com.codingwithmitch.cleannotes.framework.datasource.cache.database.NOTE_PAGINATION_PAGE_SIZE
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 

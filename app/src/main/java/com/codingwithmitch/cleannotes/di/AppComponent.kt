@@ -18,8 +18,8 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         ProductionModule::class,
-        NoteViewModelModule::class,
-        NoteFragmentFactoryModule::class
+        NoteViewModelModule::class, // not needed
+        NoteFragmentFactoryModule::class // not needed
     ]
 )
 interface AppComponent {
@@ -31,12 +31,12 @@ interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
 
-    // wont' be used
+    /*// wont' be used
     fun inject(noteListFragment: NoteListFragment)
 
     // wont' be used
     fun inject(noteDetailFragment: NoteDetailFragment)
 
     // wont' be used
-    fun inject(splashFragment: SplashFragment)
+    fun inject(splashFragment: SplashFragment)*/
 }

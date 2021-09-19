@@ -7,6 +7,7 @@ import com.codingwithmitch.cleannotes.business.data.remote.abstraction.NoteRemot
 import com.codingwithmitch.cleannotes.business.di.DependencyContainer
 import com.codingwithmitch.cleannotes.business.domain.model.NoteFactory
 import com.codingwithmitch.cleannotes.business.domain.state.DataState
+import com.codingwithmitch.cleannotes.business.interactors.BaseUseCaseToolsTest
 import com.codingwithmitch.cleannotes.business.interactors.common.DeleteNote.Companion.DELETE_NOTE_FAILED
 import com.codingwithmitch.cleannotes.business.interactors.common.DeleteNote.Companion.DELETE_NOTE_SUCCESS
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListStateEvent
@@ -35,23 +36,17 @@ Test cases:
     c) confirm network was not changed
  */
 @InternalCoroutinesApi
-class DeleteNoteTest {
+class DeleteNoteTest :BaseUseCaseToolsTest(){
 
     // system in test
-    private val deleteNotes: DeleteNote<NoteListViewState>
+    private lateinit var deleteNotes: DeleteNote<NoteListViewState>
 
-    // dependencies
-    private val dependencyContainer: DependencyContainer
-    private val noteCacheDataSource: NoteCacheDataSource
-    private val noteRemoteDataSource: NoteRemoteDataSource
-    private val noteFactory: NoteFactory
 
     init {
-        dependencyContainer = DependencyContainer()
-        dependencyContainer.build()
-        noteCacheDataSource = dependencyContainer.noteCacheDataSource
-        noteRemoteDataSource = dependencyContainer.noteRemoteDataSource
-        noteFactory = dependencyContainer.noteFactory
+        initSystemInTest()
+    }
+
+    override fun initSystemInTest() {
         deleteNotes = DeleteNote(
             noteCacheDataSource = noteCacheDataSource,
             noteRemoteDataSource = noteRemoteDataSource

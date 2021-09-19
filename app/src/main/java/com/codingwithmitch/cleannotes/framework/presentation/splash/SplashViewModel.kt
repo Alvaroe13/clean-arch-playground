@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import javax.inject.Singleton
 
-@Singleton
 class SplashViewModel
 constructor(
     private val noteNetworkSyncManager: NoteNetworkSyncManager

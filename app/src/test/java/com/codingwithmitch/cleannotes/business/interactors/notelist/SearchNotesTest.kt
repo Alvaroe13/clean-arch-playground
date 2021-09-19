@@ -6,7 +6,7 @@ import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.business.interactors.BaseUseCaseToolsTest
 import com.codingwithmitch.cleannotes.business.interactors.notelist.SearchNotes.Companion.SEARCH_NOTES_NO_MATCHING_RESULTS
 import com.codingwithmitch.cleannotes.business.interactors.notelist.SearchNotes.Companion.SEARCH_NOTES_SUCCESS
-import com.codingwithmitch.cleannotes.framework.datasource.cache.NoteDao.ORDER_BY_ASC_DATE_UPDATED
+import com.codingwithmitch.cleannotes.framework.datasource.cache.database.ORDER_BY_ASC_DATE_UPDATED
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.NoteListStateEvent.SearchNotesEvent
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect

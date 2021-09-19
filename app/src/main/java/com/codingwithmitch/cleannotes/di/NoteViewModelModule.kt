@@ -1,6 +1,7 @@
 package com.codingwithmitch.cleannotes.di
 
 import android.content.SharedPreferences
+import androidx.lifecycle.ViewModelProvider
 import com.codingwithmitch.cleannotes.business.domain.model.NoteFactory
 import com.codingwithmitch.cleannotes.business.interactors.notedetail.NoteDetailInteractors
 import com.codingwithmitch.cleannotes.business.interactors.notelist.NoteListInteractors
@@ -18,6 +19,7 @@ import javax.inject.Singleton
 object NoteViewModelModule {
 
 
+    /*
     @Singleton
     @JvmStatic
     @Provides
@@ -28,7 +30,7 @@ object NoteViewModelModule {
         noteFactory: NoteFactory,
         editor: SharedPreferences.Editor,
         sharedPreferences: SharedPreferences
-    ): NoteViewModelFactory =
+    ): ViewModelProvider.Factory =
 
         NoteViewModelFactory(
             noteListInteractors = noteListInteractors,
@@ -38,5 +40,6 @@ object NoteViewModelModule {
             editor = editor,
             sharedPreferences = sharedPreferences
         )
+     */
 
 }

@@ -354,7 +354,7 @@ constructor(
     }
 
     override fun inject() {
-        getAppComponent().inject(this)
+       // getAppComponent().inject(this)
     }
 
     override fun onItemSelected(position: Int, item: Note) {

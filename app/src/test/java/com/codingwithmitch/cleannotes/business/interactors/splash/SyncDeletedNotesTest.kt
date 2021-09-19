@@ -44,7 +44,7 @@ class SyncDeletedNotesTest : BaseUseCaseToolsTest() {
         for(note in networkNotes){
             notesToDelete.add(note)
             noteRemoteDataSource.deleteNote(note.id)
-            //noteRemoteDataSource.insertDeletedNote(note) // insert into deletes node
+            noteRemoteDataSource.insertDeletedNote(note) // insert into deletes node
             if(notesToDelete.size > 3){
                 break
             }

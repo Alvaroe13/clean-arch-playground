@@ -2,7 +2,7 @@ package com.codingwithmitch.cleannotes.business.interactors.splash
 
 import com.codingwithmitch.cleannotes.business.domain.model.Note
 import com.codingwithmitch.cleannotes.business.interactors.BaseUseCaseToolsTest
-import com.codingwithmitch.cleannotes.framework.datasource.cache.NoteDao.ORDER_BY_ASC_DATE_UPDATED
+import com.codingwithmitch.cleannotes.framework.datasource.cache.database.ORDER_BY_ASC_DATE_UPDATED
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Test

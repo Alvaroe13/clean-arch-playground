@@ -2,6 +2,7 @@ package com.codingwithmitch.cleannotes.framework.presentation.common
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.codingwithmitch.cleannotes.business.domain.util.DateUtil
 import com.codingwithmitch.cleannotes.framework.presentation.notedetail.NoteDetailFragment
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class NoteFragmentFactory
 @Inject
 constructor(
-    private val viewModelFactory: ViewModelProvider.Factory,
+    private val viewModelFactory: NoteViewModelFactory,
     private val dateUtil: DateUtil
 ) : FragmentFactory() {
 

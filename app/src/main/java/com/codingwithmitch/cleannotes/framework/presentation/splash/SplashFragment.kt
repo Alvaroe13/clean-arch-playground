@@ -20,9 +20,7 @@ import javax.inject.Singleton
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-@Singleton
 class SplashFragment
-@Inject
 constructor(
     private val viewModelFactory: ViewModelProvider.Factory
 ): BaseNoteFragment(R.layout.fragment_splash) {
@@ -79,7 +77,7 @@ constructor(
     }
 
     override fun inject() {
-        getAppComponent().inject(this)
+        //getAppComponent().inject(this)
     }
 
 }

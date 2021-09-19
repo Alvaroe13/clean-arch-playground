@@ -450,7 +450,7 @@ constructor(
     }
 
     override fun inject() {
-        getAppComponent().inject(this)
+       // getAppComponent().inject(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

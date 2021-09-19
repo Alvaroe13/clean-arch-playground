@@ -24,7 +24,6 @@ const val NOTE_TITLE_CANNOT_BE_EMPTY = "Note title can not be empty."
 @ExperimentalCoroutinesApi
 @FlowPreview
 class NoteDetailViewModel
-@Inject
 constructor(
 private val noteDetailInteractors : NoteDetailInteractors
 ): BaseViewModel<NoteDetailViewState>() {

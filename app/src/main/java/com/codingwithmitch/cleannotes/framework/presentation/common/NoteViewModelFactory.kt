@@ -17,7 +17,6 @@ import javax.inject.Singleton
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-@Singleton
 class NoteViewModelFactory
 @Inject
 constructor(

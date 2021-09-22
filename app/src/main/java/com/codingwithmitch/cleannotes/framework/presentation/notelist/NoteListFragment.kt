@@ -44,7 +44,8 @@ import kotlinx.android.synthetic.main.fragment_note_list.*
 import kotlinx.coroutines.*
 
 
-const val NOTE_LIST_STATE_BUNDLE_KEY = "com.codingwithmitch.cleannotes.notes.framework.presentation.notelist.state"
+const val NOTE_LIST_STATE_BUNDLE_KEY =
+    "com.codingwithmitch.cleannotes.notes.framework.presentation.notelist.state"
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -52,10 +53,9 @@ class NoteListFragment
 constructor(
     private val viewModelFactory: ViewModelProvider.Factory,
     private val dateUtil: DateUtil
-): BaseNoteFragment(R.layout.fragment_note_list),
+) : BaseNoteFragment(R.layout.fragment_note_list),
     NoteListAdapter.Interaction,
-    ItemTouchHelperAdapter
-{
+    ItemTouchHelperAdapter {
 
     val viewModel: NoteListViewModel by viewModels {
         viewModelFactory
@@ -76,7 +76,7 @@ constructor(
         }
     }
 
-    private fun clearArgs(){
+    private fun clearArgs() {
         arguments?.clear()
     }
 
@@ -89,6 +89,8 @@ constructor(
         setupFAB()
         subscribeObservers()
 
+        startNewSearch()
+
         restoreInstanceState(savedInstanceState)
     }
 
@@ -96,8 +98,7 @@ constructor(
         super.onResume()
         viewModel.retrieveNumNotesInCache()
         viewModel.clearList()
-        viewModel.refreshSearchQuery()
-
+        //viewModel.refreshSearchQuery()
     }
 
     override fun onPause() {
@@ -105,7 +106,7 @@ constructor(
         saveLayoutManagerState()
     }
 
-    private fun restoreInstanceState(savedInstanceState: Bundle?){
+    private fun restoreInstanceState(savedInstanceState: Bundle?) {
         savedInstanceState?.let { inState ->
             (inState[NOTE_LIST_STATE_BUNDLE_KEY] as NoteListViewState?)?.let { viewState ->
                 viewModel.setViewState(viewState)
@@ -119,7 +120,7 @@ constructor(
         val viewState = viewModel.viewState.value
 
         //clear the list. Don't want to save a large list to bundle.
-        viewState?.noteList =  ArrayList()
+        viewState?.noteList = ArrayList()
 
         outState.putParcelable(
             NOTE_LIST_STATE_BUNDLE_KEY,
@@ -134,13 +135,13 @@ constructor(
         }
     }
 
-    private fun saveLayoutManagerState(){
+    private fun saveLayoutManagerState() {
         recycler_view.layoutManager?.onSaveInstanceState()?.let { lmState ->
             viewModel.setLayoutManagerState(lmState)
         }
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             val topSpacingDecorator = TopSpacingItemDecoration(20)
@@ -158,7 +159,7 @@ constructor(
                 dateUtil
             )
             itemTouchHelper?.attachToRecyclerView(this)
-            addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -172,7 +173,7 @@ constructor(
         }
     }
 
-    private fun enableMultiSelectToolbarState(){
+    private fun enableMultiSelectToolbarState() {
         view?.let { v ->
             val view = View.inflate(
                 v.context,
@@ -188,7 +189,7 @@ constructor(
         }
     }
 
-    private fun setupMultiSelectionToolbar(parentView: View){
+    private fun setupMultiSelectionToolbar(parentView: View) {
         parentView
             .findViewById<ImageView>(R.id.action_exit_multiselect_state)
             .setOnClickListener {
@@ -202,7 +203,7 @@ constructor(
             }
     }
 
-    private fun enableSearchViewToolbarState(){
+    private fun enableSearchViewToolbarState() {
         view?.let { v ->
             val view = View.inflate(
                 v.context,
@@ -219,7 +220,7 @@ constructor(
         }
     }
 
-    private fun disableMultiSelectToolbarState(){
+    private fun disableMultiSelectToolbarState() {
         view?.let {
             val view = toolbar_content_container
                 .findViewById<Toolbar>(R.id.multiselect_toolbar)
@@ -228,7 +229,7 @@ constructor(
         }
     }
 
-    private fun disableSearchViewToolbarState(){
+    private fun disableSearchViewToolbarState() {
         view?.let {
             val view = toolbar_content_container
                 .findViewById<Toolbar>(R.id.searchview_toolbar)
@@ -236,17 +237,15 @@ constructor(
         }
     }
 
-    override fun isMultiSelectionModeEnabled()
-            = viewModel.isMultiSelectionStateActive()
+    override fun isMultiSelectionModeEnabled() = viewModel.isMultiSelectionStateActive()
 
-    override fun activateMultiSelectionMode()
-            = viewModel.setToolbarState(MultiSelectionState())
+    override fun activateMultiSelectionMode() = viewModel.setToolbarState(MultiSelectionState())
 
-    private fun subscribeObservers(){
+    private fun subscribeObservers() {
 
-        viewModel.toolbarState.observe(viewLifecycleOwner, Observer{ toolbarState ->
+        viewModel.toolbarState.observe(viewLifecycleOwner, Observer { toolbarState ->
 
-            when(toolbarState){
+            when (toolbarState) {
 
                 is MultiSelectionState -> {
                     enableMultiSelectToolbarState()
@@ -260,12 +259,11 @@ constructor(
             }
         })
 
-        viewModel.viewState.observe(viewLifecycleOwner, Observer{ viewState ->
+        viewModel.viewState.observe(viewLifecycleOwner, Observer { viewState ->
 
-            if(viewState != null){
+            if (viewState != null) {
                 viewState.noteList?.let { noteList ->
-                    if(viewModel.isPaginationExhausted()
-                        && !viewModel.isQueryExhausted()){
+                    if (viewModel.isPaginationExhausted() && !viewModel.isQueryExhausted()) {
                         viewModel.setQueryExhausted(true)
                     }
                     listAdapter?.submitList(noteList)
@@ -287,13 +285,12 @@ constructor(
 
         viewModel.stateMessage.observe(viewLifecycleOwner, Observer { stateMessage ->
             stateMessage?.let { message ->
-                if(message.response.message?.equals(DELETE_NOTE_SUCCESS) == true){
+                if (message.response.message?.equals(DELETE_NOTE_SUCCESS) == true) {
                     showUndoSnackbar_deleteNote()
-                }
-                else{
+                } else {
                     uiController.onResponseReceived(
                         response = message.response,
-                        stateMessageCallback = object: StateMessageCallback {
+                        stateMessageCallback = object : StateMessageCallback {
                             override fun removeMessageFromStack() {
                                 viewModel.clearStateMessage()
                             }
@@ -304,7 +301,7 @@ constructor(
         })
     }
 
-    private fun showUndoSnackbar_deleteNote(){
+    private fun showUndoSnackbar_deleteNote() {
         uiController.onResponseReceived(
             response = Response(
                 message = DELETE_NOTE_PENDING,
@@ -314,7 +311,7 @@ constructor(
                             viewModel.undoDelete()
                         }
                     },
-                    onDismissCallback = object: TodoCallback {
+                    onDismissCallback = object : TodoCallback {
                         override fun execute() {
                             // if the note is not restored, clear pending note
                             viewModel.setNotePendingDelete(null)
@@ -323,7 +320,7 @@ constructor(
                 ),
                 messageType = MessageType.Info()
             ),
-            stateMessageCallback = object: StateMessageCallback{
+            stateMessageCallback = object : StateMessageCallback {
                 override fun removeMessageFromStack() {
                     viewModel.clearStateMessage()
                 }
@@ -332,15 +329,17 @@ constructor(
     }
 
     // for debugging
-    private fun printActiveJobs(){
+    private fun printActiveJobs() {
 
-        for((index, job) in viewModel.getActiveJobs().withIndex()){
-            printLogD("NoteList",
-                "${index}: ${job}")
+        for ((index, job) in viewModel.getActiveJobs().withIndex()) {
+            printLogD(
+                "NoteList",
+                "${index}: ${job}"
+            )
         }
     }
 
-    private fun navigateToDetailFragment(selectedNote: Note){
+    private fun navigateToDetailFragment(selectedNote: Note) {
         val bundle = bundleOf(NOTE_DETAIL_SELECTED_NOTE_BUNDLE_KEY to selectedNote)
         findNavController().navigate(
             R.id.action_note_list_fragment_to_noteDetailFragment,
@@ -349,19 +348,18 @@ constructor(
         viewModel.setNote(null)
     }
 
-    private fun setupUI(){
+    private fun setupUI() {
         view?.hideKeyboard()
     }
 
     override fun inject() {
-       // getAppComponent().inject(this)
+        // getAppComponent().inject(this)
     }
 
     override fun onItemSelected(position: Int, item: Note) {
-        if(isMultiSelectionModeEnabled()){
+        if (isMultiSelectionModeEnabled()) {
             viewModel.addOrRemoveNoteFromSelectedList(item)
-        }
-        else{
+        } else {
             viewModel.setNote(item)
         }
     }
@@ -377,17 +375,16 @@ constructor(
     }
 
     override fun onItemSwiped(position: Int) {
-        if(!viewModel.isDeletePending()){
+        if (!viewModel.isDeletePending()) {
             listAdapter?.getNote(position)?.let { note ->
                 viewModel.beginPendingDelete(note)
             }
-        }
-        else{
+        } else {
             listAdapter?.notifyDataSetChanged()
         }
     }
 
-    private fun deleteNotes(){
+    private fun deleteNotes() {
         viewModel.setStateEvent(
             CreateStateMessageEvent(
                 stateMessage = StateMessage(
@@ -411,7 +408,7 @@ constructor(
         )
     }
 
-    private fun setupSearchView(){
+    private fun setupSearchView() {
 
         val searchViewToolbar: Toolbar? = toolbar_content_container
             .findViewById<Toolbar>(R.id.searchview_toolbar)
@@ -420,12 +417,13 @@ constructor(
 
             val searchView = toolbar.findViewById<SearchView>(R.id.search_view)
 
-            val searchPlate: SearchView.SearchAutoComplete?
-                    = searchView.findViewById(androidx.appcompat.R.id.search_src_text)
+            val searchPlate: SearchView.SearchAutoComplete? =
+                searchView.findViewById(R.id.search_src_text)
 
             searchPlate?.setOnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED
-                    || actionId == EditorInfo.IME_ACTION_SEARCH ) {
+                    || actionId == EditorInfo.IME_ACTION_SEARCH
+                ) {
                     val searchQuery = v.text.toString()
                     viewModel.setQuery(searchQuery)
                     startNewSearch()
@@ -435,16 +433,15 @@ constructor(
         }
     }
 
-    private fun setupFAB(){
+    private fun setupFAB() {
         add_new_note_fab.setOnClickListener {
             uiController.displayInputCaptureDialog(
                 getString(com.codingwithmitch.cleannotes.R.string.text_enter_a_title),
-                object: DialogInputCaptureCallback{
+                object : DialogInputCaptureCallback {
                     override fun onTextCaptured(text: String) {
-                        val newNote = viewModel.createNewNote(title = text)
                         viewModel.setStateEvent(
                             InsertNewNoteEvent(
-                                title = newNote.title
+                                title = text
                             )
                         )
                     }
@@ -453,28 +450,29 @@ constructor(
         }
     }
 
-    private fun startNewSearch(){
-        printLogD("DCM", "start new search")
-        viewModel.clearList()
-        viewModel.loadFirstPage()
-    }
-
-    private fun setupSwipeRefresh(){
+    private fun setupSwipeRefresh() {
         swipe_refresh.setOnRefreshListener {
             startNewSearch()
             swipe_refresh.isRefreshing = false
         }
     }
 
-    private fun setupFilterButton(){
-        val searchViewToolbar: Toolbar? = toolbar_content_container
-            .findViewById<Toolbar>(R.id.searchview_toolbar)
+    private fun startNewSearch() {
+        printLogD("DCM", "start new search")
+        viewModel.clearList()
+        viewModel.loadFirstPage()
+    }
+
+    private fun setupFilterButton() {
+        val searchViewToolbar: Toolbar? =
+            toolbar_content_container.findViewById(R.id.searchview_toolbar)
+
         searchViewToolbar?.findViewById<ImageView>(R.id.action_filter)?.setOnClickListener {
             showFilterDialog()
         }
     }
 
-    fun showFilterDialog(){
+    fun showFilterDialog() {
 
         activity?.let {
             val dialog = MaterialDialog(it)

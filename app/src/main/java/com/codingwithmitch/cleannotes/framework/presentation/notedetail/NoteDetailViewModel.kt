@@ -180,8 +180,7 @@ private val noteDetailInteractors : NoteDetailInteractors
         noteInteractionManager.setNewNoteBodyState(state)
     }
 
-    fun isToolbarCollapsed() = collapsingToolbarState.toString()
-        .equals(Collapsed().toString())
+    fun isToolbarCollapsed() = collapsingToolbarState.toString().equals(Collapsed().toString())
 
     fun setIsUpdatePending(isPending: Boolean){
         val update = getCurrentViewStateOrNew()
@@ -189,12 +188,9 @@ private val noteDetailInteractors : NoteDetailInteractors
         setViewState(update)
     }
 
-    fun getIsUpdatePending(): Boolean{
-        return getCurrentViewStateOrNew().isUpdatePending?: false
-    }
+    fun getIsUpdatePending(): Boolean = getCurrentViewStateOrNew().isUpdatePending?: false
 
-    fun isToolbarExpanded() = collapsingToolbarState.toString()
-        .equals(Expanded().toString())
+    fun isToolbarExpanded() = collapsingToolbarState.toString().equals(Expanded().toString())
 
     // return true if in EditState
     fun checkEditState() = noteInteractionManager.checkEditState()

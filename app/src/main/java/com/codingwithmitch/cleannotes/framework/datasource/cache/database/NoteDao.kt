@@ -57,7 +57,7 @@ interface NoteDao {
     suspend fun deleteNote(primaryKey: String): Int
 
     @Query("SELECT * FROM notes")
-    suspend fun searchNotes(): List<NoteCacheEntity>
+    suspend fun getAllNotes(): List<NoteCacheEntity>
 
     @Query("""
         SELECT * FROM notes 

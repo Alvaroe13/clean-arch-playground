@@ -31,7 +31,8 @@ constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkFirebaseAuth()
+        //checkFirebaseAuth()
+        forceValidation()
     }
 
     private fun checkFirebaseAuth(){
@@ -61,6 +62,18 @@ constructor(
                 }
             }
         )
+    }
+
+    private fun forceValidation(){
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword("blake@blake.com", "blake1234")
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    printLogD("MainActivity",
+                        "Signing in to Firebase: ${it.result}")
+                    subscribeObservers()
+                }
+            }
     }
 
     private fun subscribeObservers(){

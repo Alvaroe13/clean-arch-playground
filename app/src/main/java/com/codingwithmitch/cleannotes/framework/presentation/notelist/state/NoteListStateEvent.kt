@@ -72,4 +72,9 @@ sealed class NoteListStateEvent : StateEvent {
         override fun shouldDisplayProgressBar() = false
     }
 
+    class GetAllNotesEvent : NoteListStateEvent() {
+        override fun errorInfo(): String = "Error retrieving all notes from cache."
+        override fun eventName(): String = "GetAllNotesEvent"
+        override fun shouldDisplayProgressBar() = false
+    }
 }

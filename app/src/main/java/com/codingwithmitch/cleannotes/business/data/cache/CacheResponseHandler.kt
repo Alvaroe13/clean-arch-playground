@@ -4,7 +4,7 @@ import com.codingwithmitch.cleannotes.business.domain.state.*
 
 /**
  *  -param "ViewState" = Indicates the view in the app where this class is called
- *  -param "Data" = Indicates the type os result returned from this operation, which is always the
+ *  -param "Data" = Indicates the type of result returned from this operation, which is always the
  *  type of the "response" param in the builder
  *
  *  -NOTE : See this class implementation in use-cases for visual explanation.

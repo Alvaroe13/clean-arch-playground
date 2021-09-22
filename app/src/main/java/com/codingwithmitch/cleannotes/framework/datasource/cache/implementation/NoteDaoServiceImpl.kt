@@ -49,12 +49,6 @@ constructor(
         return noteDao.deleteNotes(ids)
     }
 
-    override suspend fun searchNotes(): List<Note> =
-        noteMapper.entityListToNoteList(
-            noteDao.searchNotes()
-        )
-
-
     override suspend fun searchNotesOrderByDateDESC(
         query: String,
         page: Int,
@@ -124,7 +118,7 @@ constructor(
 
     override suspend fun getAllNotes(): List<Note> =
         noteMapper.entityListToNoteList(
-            noteDao.searchNotes()
+            noteDao.getAllNotes()
         )
 
 }

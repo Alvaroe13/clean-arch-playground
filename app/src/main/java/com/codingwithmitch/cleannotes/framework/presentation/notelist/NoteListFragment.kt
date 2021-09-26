@@ -32,7 +32,6 @@ import com.codingwithmitch.cleannotes.framework.datasource.cache.database.NOTE_F
 import com.codingwithmitch.cleannotes.framework.datasource.cache.database.NOTE_ORDER_ASC
 import com.codingwithmitch.cleannotes.framework.datasource.cache.database.NOTE_ORDER_DESC
 import com.codingwithmitch.cleannotes.framework.presentation.common.BaseNoteFragment
-import com.codingwithmitch.cleannotes.framework.presentation.notelist.TopSpacingItemDecoration
 import com.codingwithmitch.cleannotes.framework.presentation.common.hideKeyboard
 import com.codingwithmitch.cleannotes.framework.presentation.notedetail.NOTE_DETAIL_SELECTED_NOTE_BUNDLE_KEY
 import com.codingwithmitch.cleannotes.framework.presentation.notelist.state.*
@@ -83,13 +82,14 @@ constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupUI()
+        view.hideKeyboard()
+
         setupRecyclerView()
         setupSwipeRefresh()
         setupFAB()
         subscribeObservers()
 
-        startNewSearch()
+        loadAllNotes()
 
         restoreInstanceState(savedInstanceState)
     }
@@ -348,10 +348,6 @@ constructor(
         viewModel.setNote(null)
     }
 
-    private fun setupUI() {
-        view?.hideKeyboard()
-    }
-
     override fun inject() {
         // getAppComponent().inject(this)
     }
@@ -452,7 +448,8 @@ constructor(
 
     private fun setupSwipeRefresh() {
         swipe_refresh.setOnRefreshListener {
-            startNewSearch()
+            //startNewSearch()
+            loadAllNotes()
             swipe_refresh.isRefreshing = false
         }
     }
@@ -461,6 +458,10 @@ constructor(
         printLogD("DCM", "start new search")
         viewModel.clearList()
         viewModel.loadFirstPage()
+    }
+
+    private fun loadAllNotes(){
+        viewModel.loadAllNotes()
     }
 
     private fun setupFilterButton() {

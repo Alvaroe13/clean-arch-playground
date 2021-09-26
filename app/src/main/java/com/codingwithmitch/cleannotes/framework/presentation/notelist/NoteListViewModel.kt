@@ -157,6 +157,8 @@ constructor(
                 emitInvalidStateEvent(stateEvent)
             }
         }
+
+
         launchJob(stateEvent, job)
     }
 
@@ -446,6 +448,11 @@ constructor(
             "NoteListViewModel",
             "loadFirstPage: ${getCurrentViewStateOrNew().searchQuery}"
         )
+    }
+
+    fun loadAllNotes(){
+        setQueryExhausted(false)
+        setStateEvent(NoteListStateEvent.GetAllNotesEvent())
     }
 
     fun nextPage() {

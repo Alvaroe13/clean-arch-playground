@@ -96,10 +96,11 @@ class MainActivity : AppCompatActivity(), UIController {
         when(response.uiComponentType){
 
             is UIComponentType.SnackBar -> {
-                val onDismissCallback: TodoCallback?
-                        = response.uiComponentType.onDismissCallback
-                val undoCallback: SnackbarUndoCallback?
-                        = response.uiComponentType.undoCallback
+
+                val onDismissCallback: TodoCallback? = response.uiComponentType.onDismissCallback
+
+                val undoCallback: SnackbarUndoCallback? = response.uiComponentType.undoCallback
+
                 response.message?.let { msg ->
                     displaySnackbar(
                         message = msg,

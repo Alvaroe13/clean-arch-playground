@@ -1,9 +1,10 @@
 package com.codingwithmitch.cleannotes.util
 
 import android.util.Log
-import com.codingwithmitch.cleannotes.util.Constants.DEBUG
-import com.codingwithmitch.cleannotes.util.Constants.TAG
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+
+private const val TAG = "AppDebug" // Tag for logs
+private const val DEBUG = true // enable logging
 
 var isUnitTest = false
 

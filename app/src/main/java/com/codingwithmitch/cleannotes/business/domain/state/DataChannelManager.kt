@@ -26,7 +26,8 @@ abstract class DataChannelManager<ViewState> {
     }
 
     /**
-     * fetches info emitted by the flow in the use-cases
+     * fetches info offered to this channel in the "offerToDataChannel" func in this class
+     * by using the flow method "offer"
      */
     private fun initChannel() {
         dataChannel
@@ -75,6 +76,10 @@ abstract class DataChannelManager<ViewState> {
         }
     }
 
+    /**
+     * this one makes possible to avoid job duplicates
+     * (e.g = user pressed the same button twice before the execution of the first job is finished)
+     */
     private fun canExecuteNewStateEvent(stateEvent: StateEvent): Boolean {
         // If a job is already active, do not allow duplication
         if (isJobAlreadyActive(stateEvent)) {

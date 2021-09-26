@@ -21,7 +21,7 @@ sealed class NoteListStateEvent : StateEvent {
     class InsertMultipleNotesEvent(
         val numNotes: Int
     ) : NoteListStateEvent() {
-        override fun errorInfo(): String = " Error inserting multiple notes"
+        override fun errorInfo(): String = "Error inserting multiple notes"
         override fun eventName(): String = "InsertMultipleNotesEvent"
         override fun shouldDisplayProgressBar(): Boolean = true
     }
